@@ -1,0 +1,11 @@
+package javatd;
+
+public class JavaTD {
+
+	public static void main(String[] args) {
+		
+		Tower test = new Tower(1);
+		
+		test.testTower();
+	}
+}

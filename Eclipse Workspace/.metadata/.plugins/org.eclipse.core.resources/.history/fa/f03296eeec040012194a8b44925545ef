@@ -1,0 +1,9 @@
+package javatd;
+
+public class Enemy {
+	
+	private short x, y;
+	private int damage, speed, type;
+	private double shootRange;
+	
+}

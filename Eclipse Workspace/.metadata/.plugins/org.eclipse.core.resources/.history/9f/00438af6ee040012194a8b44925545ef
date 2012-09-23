@@ -1,0 +1,8 @@
+package javatd;
+
+public class Projectile {
+
+	private int x, y;
+	
+	
+}

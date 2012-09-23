@@ -1,0 +1,23 @@
+package javatd;
+
+public class JavaTD {
+
+	public static void main(String[] args) {
+		
+//		for (int x = 0; x < 4; x++) {
+//			System.out.print ( (int) (100 + (100 * ((x + 1) * 0.1)) * (x + 1)) + ", ");
+//		}
+//		
+//		System.out.println("");
+//		
+//		for (int x = 0; x < 4; x++) {
+//			System.out.print( (int) ((100 * 0.5) * (x + 1)) + ", ");
+//		}
+		double[] d = { 1.0/3.0, Math.PI, 2.0/3.0 };
+		for(int j = 0; j < d.length; j++) {
+		    System.out.printf("d[%d] = %f%n", j, d[j]);
+		    double d2 = (int)Math.round(d[j] * 100)/100.0;
+		    System.out.printf("d2   = %f%n", d2);
+		}
+	}
+}

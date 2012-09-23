@@ -1,0 +1,11 @@
+package javatd;
+
+public class JavaTD {
+
+	public static void main(String[] args) {
+		
+		Tower test = new Tower(1);	//Create Tower of the Regular Type.
+		
+		test.testTower();	// View the Upgrades 
+	}
+}

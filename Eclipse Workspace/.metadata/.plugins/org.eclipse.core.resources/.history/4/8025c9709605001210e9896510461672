@@ -1,0 +1,134 @@
+package javatd;
+
+// Tower Types		1. Regular		2. Rapid Fire		3. Slow		 4. Cluster/Bomb		5. Tracer Rockets
+public class Tower {
+
+	/* *
+	 * Variable Declarations *
+	 */
+
+	private int x, y, targetX, targetY; /* Variables for Recording Coordinates of tower and targeted enemy */													
+	private int damage, type, range; // Attributes of the towers
+	private int purchasePrice, salePrice, upgradeLevel, upgradePrice;	// Tower pricing 
+	private double speed; // Speed at which the Tower will fire
+
+	private int[] initialDamages = { 45, 27, 20, 80, 150 }; /* Predefined initial damages for tower types */
+	private int[] initialRanges = { 95, 115, 80, 90, 105 }; /* Predefined initial ranges for tower types */
+	private int[] damageUpgrade = new int[4]; /* All Damage Upgrades for all tower types */
+	private int[] rangeUpgrade = new int[4]; /* All Range Upgrades for all tower types */
+
+	private double[] initialSpeeds = { 1.0, 0.5, 1.5, 1.7, 1.4 }; /* Predefined initial speeds for tower types */																						
+	private double[] speedUpgrade = new double[4]; /* All Speed Upgrades for all tower types */
+
+	private final int[] TOWER_PURCHASE_PRICES = { 100, 250, 400, 700, 1000 }; /* Predefined tower type purchase prices */
+
+	/* *
+	 * Constructor(s) *
+	 */
+	
+	public Tower(int type) {
+		this.type = type; // Sets Type of tower.
+
+		setUpgradeLevel(0); // Initial Upgrade Level
+
+		for (int x = 0; x < 4; x++) {
+			damageUpgrade[x] = (int) ((initialDamages[type] * 0.5) + ((initialDamages[type] * 0.6) * (x + 1)));
+			rangeUpgrade[x] = (int) (initialRanges[type] + ((initialRanges[type] * 0.1) * (x + 1)));
+			speedUpgrade[x] = (int) Math.round((initialSpeeds[type] - ((initialSpeeds[type] * 0.1) * (x + 1))) * 100) / 100.0;
+		}
+
+		setDamage(initialDamages[type]); 
+		setSpeed(initialSpeeds[type]); 
+		setRange(initialRanges[type]); 
+		
+		setPurchasePrice(TOWER_PURCHASE_PRICES[type]);
+		setUpgradePrice(type);
+		setSalePrice(type);
+	}
+
+	/* *
+	 * Getter & Setter Methods *
+	 */
+
+	public int getDamage() {
+		return damage;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+
+	public double getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public int getRange() {
+		return range;
+	}
+
+	public void setRange(int range) {
+		this.range = range;
+	}
+
+	public int getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	public void setPurchasePrice(int purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
+
+	public int getSalePrice() {
+		return salePrice;
+	}
+
+	public void setSalePrice(int salePrice) {
+		// Sale Price on a Tower is: Half the Initial Price * UpgradeLevel
+		this.salePrice = (int) ((purchasePrice * 0.5) * (upgradeLevel + 1));
+	}
+
+	public int getUpgradeLevel() {
+		return upgradeLevel;
+	}
+
+	public void setUpgradeLevel(int upgradeLevel) {
+		this.upgradeLevel = upgradeLevel;
+	}
+
+	public int getUpgradePrice() {
+		return upgradePrice;
+	}
+
+	public void setUpgradePrice(int upgradePrice) {
+		// Price to Upgrade is: Initial Price + ((Upgrade Level * 1/10th of Initial Price) * Upgrade Level) 
+		// Example. Upgrade Costs with 100 Purchase Price: 	1: 110	 2: 140 		3: 190	 4: 260.
+		this.upgradePrice = (int) (purchasePrice + (purchasePrice * ((upgradeLevel + 1) * 0.1))* (upgradeLevel + 1));
+	}
+
+	/* *
+	 * Tower Operation Methods *
+	 */
+
+	public void testTower() {
+		
+		System.out.printf("Damage: %d\t\tRange: %d\t\tSpeed: %.2f\n\n", damage, range, speed);
+		// D/R/S[upgradeAfterInitial]
+		// D - damageUpgrade, R - rangeUpgrade, S - speedUpgrade. Speed is in delay between shots: 0.5 == 2 shots per second.
+		for (int x = 0; x < 4; x++) {
+			System.out.printf("D[%d]: %d\t\tR[%d]: %d\t\tS[%d]: %.2f\n", x, damageUpgrade[x], x, rangeUpgrade[x], x, speedUpgrade[x]);
+		}
+	}
+
+}

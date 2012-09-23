@@ -1,0 +1,140 @@
+package javatd;
+
+
+// Tower Types		1. Regular		2. Rapid Fire		3. Slow		 4. Cluster/Bomb		5. Tracer Rockets
+public class Tower {
+	
+	/*																	*
+	 * 				Variable Declarations					* 
+	 *																	*/
+	
+	private int x, y, targetX, targetY;	// Variables for Recording Coordinates of Tower and Targeted Enemy
+	private int damage, type, range, purchasePrice, salePrice, upgradeLevel, upgradePrice; // Attributes of the Towers
+	private double speed;	// Speed at which the Tower will fire
+	
+	private int[] initialDamages = {50, 30, 20, 80, 150}; 	// Predefined Initial Damages for Tower Types
+	private int[] initialRanges = {90, 100, 70, 80, 85};		// Predefined Initial Ranges for Tower Types
+	private int[][] damageOptions = new int[5][4];				// All Damage Upgrades for all Tower Types
+	private int[][] rangeOptions = new int[5][4];				// All Range Upgrades for all Tower Types
+	
+	private double[] initialSpeeds = {1.0, 0.4, 0.8, 1.5, 1.2};		// Predefined Initial Speeds for Tower Types
+	private double[][] speedOptions = new double[5][4];   			// All Speed Upgrades for All Tower Types
+	
+	private final int[] TOWER_PURCHASE_PRICES = {100, 250, 400, 700, 1000};	// Predefined Tower Type Purchase Prices
+	
+	/*																	*
+	 *  					Constructor(s)							*
+	 *																	*/
+	
+	public Tower(int type) {
+		this.type = type;		// Sets Type of tower.
+		
+		upgradeLevel = 0;		// Initial Upgrade Level
+		
+		for (int y = 0; y < 5; y++) {
+			for (int x = 0; x < 4; x++) {
+				damageOptions[y][x] = (int) ((initialDamages[x] * 0.5) + ((initialDamages[x] * 0.6) * (x + 1)));
+				rangeOptions[y][x] =  (int) (initialRanges[x] + ((initialRanges[x] * 0.1) * (x + 1)));
+				speedOptions[y][x] =  (int) Math.round((initialSpeeds[x] - ((initialSpeeds[x] * 0.1) * (x + 1))) * 100) / 100.0;				
+			}
+		}
+		
+		damage = damageOptions[type][upgradeLevel];
+		speed = speedOptions[type][upgradeLevel];
+		range = rangeOptions[type][upgradeLevel];
+		purchasePrice = TOWER_PURCHASE_PRICES[type];
+		
+		/* Price to Upgrade is:   Initial Price  +  ((Upgrade Level  *  1/10th of Initial Price)  *  Upgrade Level.)  
+		 * Example. Upgrade Costs with 100 Purchase Price: 	1: 110	   2: 140	   3: 190	   4: 260. 			*/
+		upgradePrice = (int) (purchasePrice + (purchasePrice * ((upgradeLevel + 1 ) * 0.1)) * (upgradeLevel + 1)); 
+		// Sale Price on a Tower is:	 Half the Initial Price  *  UpgradeLevel	
+		salePrice = 	(int)	((purchasePrice * 0.5) * (upgradeLevel + 1));		
+	}
+
+	
+	/*																	*
+	 *  				Getter & Setter Methods					*
+	 *																	*/
+	
+	public int getDamage() {
+		return damage;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+
+	public double getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public int getRange() {
+		return range;
+	}
+
+	public void setRange(int range) {
+		this.range = range;
+	}
+	
+	public int getPurchasePrice() {
+		return purchasePrice;
+	}
+	
+	public void setPurchasePrice(int purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
+	
+	public int getSalePrice() {
+		return salePrice;
+	}
+	
+	public void setSalePrice(int salePrice) {
+		this.salePrice = salePrice;
+	}
+	
+	public int getUpgradeLevel() {
+		return upgradeLevel;
+	}
+
+	public void setUpgradeLevel(int upgradeLevel) {
+		this.upgradeLevel = upgradeLevel;
+	}
+	
+	public int getUpgradePrice() {
+		return upgradePrice;
+	}
+		
+	public void setUpgradePrice(int upgradePrice) {
+		this.upgradePrice = upgradePrice;
+	}
+
+	/*																	*
+	 * 			Tower Operation Methods						*
+	 *																	*/
+	
+	public void testTower() {
+		
+		for (int y = 0; y < 5; y++) {
+			for (int x = 0; x < 4; x++) {
+				System.out.printf("D[%d][%d]: %d\t\tR[%d][%d]: %d\t\tS[%d][%d]: %.2f\n", y, x, damageOptions[y][x], y, x, rangeOptions[y][x],
+												y, x, speedOptions[y][x]);
+			}
+			System.out.println("");
+		}
+		
+	}
+	
+	
+}
